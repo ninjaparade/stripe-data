@@ -1,0 +1,140 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration
+{
+    public function up()
+    {
+        Schema::create('stripe_products', function (Blueprint $table) {
+            $table->id();
+            $table->string('name');
+            $table->string('nickname')->nullable();
+            $table->string('stripe_id');
+            $table->string('default_price_id')->nullable();
+            $table->text('description')->nullable();
+            $table->boolean('active')->default(true);
+            $table->jsonb('features')->default('{}');
+            $table->jsonb('images')->default('{}');
+            $table->boolean('shippable')->default(false);
+            $table->text('statement_descriptor')->nullable();
+            $table->string('tax_code')->nullable();
+            $table->string('unit_label')->nullable();
+            $table->string('url')->nullable();
+            $table->jsonb('metadata')->default('{}');
+            $table->timestamps();
+        });
+
+        Schema::create('stripe_prices', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('product_id')->index();
+            $table->string('name');
+            $table->string('nickname')->nullable();
+            $table->string('stripe_id');
+            $table->string('type');
+            $table->string('billing_scheme');
+            $table->unsignedInteger('unit_amount');
+            $table->string('currency');
+            $table->string('custom_unit_amount')->nullable();
+            $table->string('lookup_key')->nullable();
+            $table->jsonb('recurring')->default('{}');
+            $table->string('tax_behavior')->nullable();
+            $table->string('tiers_mode')->nullable();
+            $table->string('transform_quantity')->nullable();
+            $table->jsonb('metadata')->default('{}');
+            $table->timestamps();
+        });
+
+        Schema::create('stripe_invoices', function (Blueprint $table) {
+            $table->id();
+            $table->string('stripe_id');
+            $table->string('number');
+
+            // Invoice Payment information
+            $table->string('currency');
+            $table->integer('amount_due')->default(0);
+            $table->integer('amount_paid')->default(0);
+            $table->integer('amount_remaining')->default(0);
+            $table->integer('amount_shipping')->default(0);
+            $table->integer('subtotal')->default(0);
+            $table->integer('subtotal_excluding_tax')->default(0);
+            $table->integer('total')->default(0);
+            $table->integer('total_excluding_tax')->default(0);
+            $table->jsonb('discounts')->default('{}');
+            $table->jsonb('total_tax_amounts')->default('{}');
+            $table->jsonb('total_discount_amounts')->default('{}');
+
+            // Invoice Specific Data
+            $table->string('status');
+            $table->string('billing_reason')->nullable();
+            // Subscription Information (if it's a recurring invoice)
+            $table->string('stripe_subscription_id')->nullable();
+            $table->dateTime('period_start')->nullable();
+            $table->dateTime('period_end')->nullable();
+
+            // Invoice Charge data
+            $table->string('charge_id')->nullable();
+            $table->dateTime('invoice_created_at');
+            $table->dateTime('invoice_due_date')->nullable();
+
+            $table->integer('starting_balance')->default(0);
+            $table->integer('post_payment_credit_notes_amount')->default(0);
+            $table->integer('pre_payment_credit_notes_amount')->default(0);
+            $table->integer('attempt_count')->default(0);
+            $table->boolean('attempted')->default(false);
+            $table->boolean('auto_advance')->default(false);
+            $table->jsonb('automatic_tax')->default('{}');
+            $table->jsonb('payment_settings')->default('{}');
+            $table->jsonb('status_transitions')->default('{}');
+            $table->string('collection_method')->nullable();
+
+            // Stripe Customer Data
+            $table->string('stripe_customer_id');
+            $table->string('customer_address')->nullable();
+            $table->string('customer_email')->nullable();
+            $table->string('customer_name')->nullable();
+            $table->string('customer_phone')->nullable();
+            $table->string('customer_shipping')->nullable();
+            $table->string('customer_tax_exempt')->nullable();
+
+            // Stripe Connect Application Data
+            $table->string('account_name');
+            $table->string('account_country');
+            $table->string('application')->nullable();
+            $table->integer('application_fee_amount')->default(0);
+            $table->jsonb('transfer_data')->default('{}');
+
+            $table->string('description')->nullable();
+            $table->string('stripe_discount_id')->nullable();
+            $table->text('invoice_pdf')->nullable();
+
+            $table->jsonb('metadata')->default('{}');
+
+            $table->timestamps();
+        });
+
+        Schema::create('stripe_invoice_items', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('invoice_id')->index();
+            $table->string('stripe_id');
+            $table->string('number');
+            $table->string('currency');
+            $table->integer('quantity')->default(1);
+            $table->integer('unit_amount')->default(0);
+            $table->integer('amount')->default(0);
+            $table->string('stripe_customer_id');
+            $table->string('stripe_invoice_id');
+            $table->string('stripe_price_id')->nullable();
+            $table->string('stripe_subscription_id')->nullable();
+            $table->string('description');
+            $table->boolean('discountable')->default(false);
+            $table->boolean('proration')->default(false);
+
+            $table->jsonb('period')->default('{}');
+            $table->jsonb('tax_rates')->default('{}');
+            $table->jsonb('metadata')->default('{}');
+        });
+    }
+};

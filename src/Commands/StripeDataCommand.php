@@ -1,12 +1,12 @@
 <?php
 
-namespace VendorName\Skeleton\Commands;
+namespace Ninjaparade\StripeData\Commands;
 
 use Illuminate\Console\Command;
 
-class SkeletonCommand extends Command
+class StripeDataCommand extends Command
 {
-    public $signature = 'skeleton';
+    public $signature = 'stripe-data';
 
     public $description = 'My command';
 
