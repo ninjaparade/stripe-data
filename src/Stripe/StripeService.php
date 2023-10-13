@@ -5,6 +5,7 @@ namespace Ninjaparade\StripeData\Stripe;
 use Ninjaparade\StripeData\Data\Config\StripeConfig;
 use Ninjaparade\StripeData\Data\Response\StripeCustomerData;
 use Stripe\Exception\ApiErrorException;
+use Stripe\SearchResult;
 use Stripe\StripeClient;
 
 class StripeService
@@ -14,8 +15,7 @@ class StripeService
     }
 
     /**
-     * Retrieve a single customer.
-     * https://stripe.com/docs/api/customers/retrieve.
+     * Return a customer.
      *
      * @throws ApiErrorException
      */
@@ -27,6 +27,37 @@ class StripeService
         );
 
         return StripeCustomerData::from($customer->toArray());
+    }
+
+    /**
+     * List customers.
+     *
+     *
+     * @return \Spatie\LaravelData\CursorPaginatedDataCollection|\Spatie\LaravelData\DataCollection|\Spatie\LaravelData\PaginatedDataCollection(StripeCustomerData::class)
+     *
+     * @throws ApiErrorException
+     */
+    public function customers(array $parameters = [], int $limit = 100): \Spatie\LaravelData\PaginatedDataCollection|\Spatie\LaravelData\CursorPaginatedDataCollection|\Spatie\LaravelData\DataCollection
+    {
+        $customers = $this->client()->customers->all(
+            array_merge($parameters, [
+                'limit' => $limit,
+            ])
+        );
+
+        return StripeCustomerData::collection(collect(data_get($customers->toArray(), 'data')));
+    }
+
+    /**
+     * @throws ApiErrorException
+     */
+    public function customersSearch(string $query, array $parameters = []): SearchResult
+    {
+        return $this->client()->customers->search(
+            array_merge($parameters, [
+                'query' => $query,
+            ])
+        );
     }
 
     public function getClient(): StripeClient
