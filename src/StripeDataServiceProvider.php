@@ -2,7 +2,7 @@
 
 namespace Ninjaparade\StripeData;
 
-use Ninjaparade\StripeData\Commands\StripeDataCommand;
+use Ninjaparade\StripeData\Commands\StripeDataSyncCustomersCommand;
 use Ninjaparade\StripeData\Data\Config\StripeConfig;
 use Ninjaparade\StripeData\Stripe\StripeService;
 use Spatie\LaravelPackageTools\Package;
@@ -22,7 +22,10 @@ class StripeDataServiceProvider extends PackageServiceProvider
             ->hasConfigFile()
             ->hasViews()
             ->hasMigration('create_stripe_data_table')
-            ->hasCommand(StripeDataCommand::class);
+            ->hasCommands([
+                StripeDataSyncCustomersCommand::class,
+            ]);
+
     }
 
     public function registeringPackage(): void
