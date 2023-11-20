@@ -36,7 +36,7 @@ class StripeDataSyncCustomersCommand extends Command
         $this->bar->start();
 
         $customers->data->each(function (StripeCustomerData $customer) {
-         $data = $customer->except('stripe_id')->except('object')->toArray();
+            $data = $customer->except('stripe_id')->except('object')->toArray();
             StripeCustomer::query()
                 ->updateOrCreate([
                     'stripe_id' => $customer->stripe_id,
