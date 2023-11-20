@@ -2,7 +2,7 @@
 
 namespace Ninjaparade\StripeData\Stripe\Concerns;
 
-use Ninjaparade\StripeData\Data\Response\StripePaginatedInvoiceData;
+use Ninjaparade\StripeData\Data\Response\Invoices\StripePaginatedInvoiceData;
 
 trait InteractsWithInvoices
 {

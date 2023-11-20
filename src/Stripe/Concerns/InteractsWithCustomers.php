@@ -2,8 +2,8 @@
 
 namespace Ninjaparade\StripeData\Stripe\Concerns;
 
-use Ninjaparade\StripeData\Data\Response\StripeCustomerData;
-use Ninjaparade\StripeData\Data\Response\StripePaginatedCustomerData;
+use Ninjaparade\StripeData\Data\Response\Customers\StripeCustomerData;
+use Ninjaparade\StripeData\Data\Response\Customers\StripePaginatedCustomerData;
 use Stripe\Exception\ApiErrorException;
 use Stripe\SearchResult;
 

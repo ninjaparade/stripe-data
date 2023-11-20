@@ -1,16 +1,16 @@
 <?php
 
-namespace Ninjaparade\StripeData\Data\Response;
+namespace Ninjaparade\StripeData\Data\Response\Invoices;
 
 use Spatie\LaravelData\Attributes\DataCollectionOf;
 use Spatie\LaravelData\Data;
 use Spatie\LaravelData\DataCollection;
 
-class StripePaginatedCustomerData extends Data
+class StripePaginatedInvoiceData extends Data
 {
     public function __construct(
         public readonly bool $has_more,
-        #[DataCollectionOf(StripeCustomerData::class)]
+        #[DataCollectionOf(StripeInvoiceData::class)]
         public readonly ?DataCollection $data,
     ) {
 

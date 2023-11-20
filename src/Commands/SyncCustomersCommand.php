@@ -3,12 +3,12 @@
 namespace Ninjaparade\StripeData\Commands;
 
 use Illuminate\Console\Command;
-use Ninjaparade\StripeData\Data\Response\StripeCustomerData;
+use Ninjaparade\StripeData\Data\Response\Customers\StripeCustomerData;
 use Ninjaparade\StripeData\Models\StripeCustomer;
 use Ninjaparade\StripeData\Stripe\StripeService;
 use Stripe\Exception\ApiErrorException;
 
-class StripeDataSyncCustomersCommand extends Command
+class SyncCustomersCommand extends Command
 {
     protected $signature = 'stripe-data-sync:customers';
 
@@ -36,7 +36,7 @@ class StripeDataSyncCustomersCommand extends Command
         $this->bar->start();
 
         $customers->data->each(function (StripeCustomerData $customer) {
-         $data = $customer->except('stripe_id')->except('object')->toArray();
+            $data = $customer->except('stripe_id')->except('object')->toArray();
             StripeCustomer::query()
                 ->updateOrCreate([
                     'stripe_id' => $customer->stripe_id,

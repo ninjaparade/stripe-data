@@ -1,6 +1,6 @@
 <?php
 
-namespace Ninjaparade\StripeData\Data\Response;
+namespace Ninjaparade\StripeData\Data\Response\Customers;
 
 use Spatie\LaravelData\Data;
 

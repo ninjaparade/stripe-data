@@ -38,16 +38,17 @@ return new class extends Migration
             $table->string('nickname')->nullable();
             $table->string('stripe_id');
             $table->string('default_price_id')->nullable();
+            $table->string('type')->nullable();
             $table->text('description')->nullable();
             $table->boolean('active')->default(true);
-            $table->jsonb('features')->default('{}');
-            $table->jsonb('images')->default('{}');
-            $table->boolean('shippable')->default(false);
+            $table->jsonb('attributes')->default('[]');
+            $table->jsonb('features')->default('[]');
+            $table->jsonb('images')->default('[]');
             $table->text('statement_descriptor')->nullable();
             $table->string('tax_code')->nullable();
             $table->string('unit_label')->nullable();
             $table->string('url')->nullable();
-            $table->jsonb('metadata')->default('{}');
+            $table->jsonb('metadata')->default('[]');
             $table->timestamps();
         });
 
