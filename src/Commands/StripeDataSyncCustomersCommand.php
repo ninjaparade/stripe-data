@@ -10,7 +10,7 @@ use Stripe\Exception\ApiErrorException;
 
 class StripeDataSyncCustomersCommand extends Command
 {
-    protected $signature = 'stripe-data:sync-customers';
+    protected $signature = 'stripe-data-sync:customers';
 
     protected $description = 'Command description';
 
@@ -27,17 +27,20 @@ class StripeDataSyncCustomersCommand extends Command
     public function handle(): void
     {
         $customers = $this->stripe->customers();
-        $count = $customers->count();
+
+        $count = $customers->data->count();
+
         $this->bar = $this->output->createProgressBar($count);
         $this->info("Syncing $count records 🥷");
 
         $this->bar->start();
 
-        $customers->each(function (StripeCustomerData $customer) {
+        $customers->data->each(function (StripeCustomerData $customer) {
+         $data = $customer->except('stripe_id')->except('object')->toArray();
             StripeCustomer::query()
                 ->updateOrCreate([
                     'stripe_id' => $customer->stripe_id,
-                ], $customer->except('stripe_id')->toArray());
+                ], $data);
             $this->bar->advance();
         });
 

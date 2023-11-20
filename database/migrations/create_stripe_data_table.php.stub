@@ -8,6 +8,30 @@ return new class extends Migration
 {
     public function up()
     {
+        Schema::create('stripe_customers', function (Blueprint $table) {
+            $table->id();
+            $table->string('name');
+            $table->string('email')->nullable();
+            $table->integer('balance')->default(0);
+            $table->string('stripe_id');
+            $table->string('currency')->nullable();
+            $table->string('phone')->nullable();
+            $table->json('preferred_locales')->nullable();
+            $table->string('address')->nullable();
+            $table->string('default_source')->nullable();
+            $table->boolean('delinquent')->default(false);
+            $table->string('discount')->nullable();
+            $table->string('invoice_prefix');
+            $table->string('next_invoice_sequence');
+            $table->json('invoice_settings')->nullable();
+            $table->string('shipping')->nullable();
+            $table->string('tax_exempt')->nullable();
+            $table->string('description')->nullable();
+            $table->json('metadata')->nullable();
+            $table->dateTime('created');
+            $table->timestamps();
+        });
+
         Schema::create('stripe_products', function (Blueprint $table) {
             $table->id();
             $table->string('name');

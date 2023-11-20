@@ -12,6 +12,7 @@ class StripeCustomer extends Model
     protected $guarded = ['id'];
 
     protected $casts = [
+        'balance' => 'integer',
         'delinquent' => 'boolean',
         'invoice_settings' => StripInvoiceSettingCast::class,
         'preferred_locales' => 'array',
@@ -19,6 +20,7 @@ class StripeCustomer extends Model
     ];
 
     protected $attributes = [
+        'balance' => 0,
         'delinquent' => false,
     ];
 }
