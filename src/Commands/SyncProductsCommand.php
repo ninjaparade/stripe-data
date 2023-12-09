@@ -10,9 +10,9 @@ use Stripe\Exception\ApiErrorException;
 
 class SyncProductsCommand extends Command
 {
-    protected $signature = 'stripe-data-sync:products';
+    public $signature = 'stripe-data-sync:products';
 
-    protected $description = 'Command description';
+    public $description = 'Command description';
 
     protected \Symfony\Component\Console\Helper\ProgressBar $bar;
 
@@ -24,7 +24,7 @@ class SyncProductsCommand extends Command
     /**
      * @throws ApiErrorException
      */
-    public function handle(): void
+    public function handle(): int
     {
         $products = $this->stripe->products();
 
@@ -48,5 +48,7 @@ class SyncProductsCommand extends Command
 
         $this->bar->finish();
         $this->info("Done Syncing $count records 🥷");
+
+        return self::SUCCESS;
     }
 }

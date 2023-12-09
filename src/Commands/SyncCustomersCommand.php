@@ -10,9 +10,9 @@ use Stripe\Exception\ApiErrorException;
 
 class SyncCustomersCommand extends Command
 {
-    protected $signature = 'stripe-data-sync:customers';
+    public $signature = 'stripe-data-sync:customers';
 
-    protected $description = 'Command description';
+    public $description = 'Command description';
 
     protected \Symfony\Component\Console\Helper\ProgressBar $bar;
 

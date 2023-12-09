@@ -24,12 +24,11 @@ class StripeDataServiceProvider extends PackageServiceProvider
         $package
             ->name('stripe-data')
             ->hasConfigFile()
-            ->hasViews()
+            //            ->hasViews()
             ->hasMigration('create_stripe_data_table')
-            ->hasCommands([
-                SyncCustomersCommand::class,
-                SyncProductsCommand::class,
-            ]);
+            ->hasCommands(
+                $this->getCommands()
+            );
 
     }
 
@@ -43,6 +42,17 @@ class StripeDataServiceProvider extends PackageServiceProvider
         );
 
         $this->app->alias(StripeService::class, 'stripe');
+    }
+
+    /**
+     * @return array<class-string>
+     */
+    protected function getCommands(): array
+    {
+        return [
+            SyncCustomersCommand::class,
+            SyncProductsCommand::class,
+        ];
     }
 
     public function boot()
