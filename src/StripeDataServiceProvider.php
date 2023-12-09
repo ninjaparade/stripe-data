@@ -49,14 +49,17 @@ class StripeDataServiceProvider extends PackageServiceProvider
      */
     protected function getCommands(): array
     {
-        return [
+        return $this->app->runningInConsole() ?
+        [
             SyncCustomersCommand::class,
             SyncProductsCommand::class,
-        ];
+        ] : [];
     }
 
-    public function boot()
+    public function packageBooted()
     {
+        parent::packageBooted();
+
         Relation::enforceMorphMap([
             'stripe_customer' => StripeCustomer::class,
             'stripe_product' => StripeProduct::class,

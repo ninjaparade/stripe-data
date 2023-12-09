@@ -7,6 +7,7 @@ use Ninjaparade\StripeData\Data\Response\Customers\StripeCustomerData;
 use Ninjaparade\StripeData\Models\StripeCustomer;
 use Ninjaparade\StripeData\Stripe\StripeService;
 use Stripe\Exception\ApiErrorException;
+use Symfony\Component\Console\Helper\ProgressBar;
 
 class SyncCustomersCommand extends Command
 {
@@ -14,7 +15,7 @@ class SyncCustomersCommand extends Command
 
     public $description = 'Command description';
 
-    protected \Symfony\Component\Console\Helper\ProgressBar $bar;
+    protected ProgressBar $bar;
 
     public function __construct(protected StripeService $stripe)
     {
