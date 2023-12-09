@@ -5,9 +5,12 @@ namespace Ninjaparade\StripeData;
 use Ninjaparade\StripeData\Commands\SyncCustomersCommand;
 use Ninjaparade\StripeData\Commands\SyncProductsCommand;
 use Ninjaparade\StripeData\Data\Config\StripeConfig;
+use Ninjaparade\StripeData\Models\StripeCustomer;
+use Ninjaparade\StripeData\Models\StripeProduct;
 use Ninjaparade\StripeData\Stripe\StripeService;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
+use Illuminate\Database\Eloquent\Relations\Relation;
 
 class StripeDataServiceProvider extends PackageServiceProvider
 {
@@ -34,11 +37,19 @@ class StripeDataServiceProvider extends PackageServiceProvider
     {
         $this->app->singleton(
             StripeService::class,
-            fn ($app) => new StripeService(
+            fn($app) => new StripeService(
                 config: StripeConfig::from(config('stripe-data.stripe'))
             )
         );
 
         $this->app->alias(StripeService::class, 'stripe');
+    }
+
+    public function boot()
+    {
+        Relation::enforceMorphMap([
+            'stripe_customer' => StripeCustomer::class,
+            'stripe_product' => StripeProduct::class
+        ]);
     }
 }

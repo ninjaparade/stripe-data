@@ -2,9 +2,9 @@
 
 namespace Ninjaparade\StripeData\Models\Casts;
 
+use Ninjaparade\StripeData\Data\Response\Customers\StripeCustomerInvoiceSettingData;
 use Illuminate\Contracts\Database\Eloquent\CastsAttributes;
 use Illuminate\Database\Eloquent\Model;
-use Ninjaparade\StripeData\Data\Response\StripeCustomerInvoiceSettingData;
 
 class StripInvoiceSettingCast implements CastsAttributes
 {
