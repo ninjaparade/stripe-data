@@ -16,7 +16,8 @@ class StripePrice extends Model
         'type' => BillingType::class,
         //        'unit_amount' => 'integer',
         //        'recurring' => 'array',
-        //        'metadata' => 'array',
+        'recurring' => 'json',
+        'metadata' => 'json',
         //        'active' => 'boolean',
     ];
 
