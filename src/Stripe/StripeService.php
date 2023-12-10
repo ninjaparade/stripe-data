@@ -5,6 +5,7 @@ namespace Ninjaparade\StripeData\Stripe;
 use Ninjaparade\StripeData\Data\Config\StripeConfig;
 use Ninjaparade\StripeData\Stripe\Concerns\InteractsWithCustomers;
 use Ninjaparade\StripeData\Stripe\Concerns\InteractsWithInvoices;
+use Ninjaparade\StripeData\Stripe\Concerns\InteractsWithPrices;
 use Ninjaparade\StripeData\Stripe\Concerns\InteractsWithProducts;
 use Stripe\StripeClient;
 
@@ -12,6 +13,7 @@ class StripeService
 {
     use InteractsWithCustomers;
     use InteractsWithInvoices;
+    use InteractsWithPrices;
     use InteractsWithProducts;
 
     public function __construct(protected StripeConfig $config)

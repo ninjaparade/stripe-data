@@ -59,6 +59,7 @@ return new class extends Migration
             $table->string('nickname')->nullable();
             $table->string('stripe_id');
             $table->string('type');
+            $table->boolean('active')->default(true);
             $table->string('billing_scheme');
             $table->unsignedInteger('unit_amount');
             $table->string('currency');

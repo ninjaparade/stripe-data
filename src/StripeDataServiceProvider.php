@@ -4,6 +4,7 @@ namespace Ninjaparade\StripeData;
 
 use Illuminate\Database\Eloquent\Relations\Relation;
 use Ninjaparade\StripeData\Commands\SyncCustomersCommand;
+use Ninjaparade\StripeData\Commands\SyncPricesCommand;
 use Ninjaparade\StripeData\Commands\SyncProductsCommand;
 use Ninjaparade\StripeData\Data\Config\StripeConfig;
 use Ninjaparade\StripeData\Models\StripeCustomer;
@@ -53,6 +54,7 @@ class StripeDataServiceProvider extends PackageServiceProvider
         [
             SyncCustomersCommand::class,
             SyncProductsCommand::class,
+            SyncPricesCommand::class,
         ] : [];
     }
 
