@@ -11,6 +11,7 @@ return new class extends Migration
         Schema::create('stripe_customers', function (Blueprint $table) {
             $table->id();
             $table->string('name');
+            $table->foreignId('account_id')->nullable()->index();
             $table->string('email')->nullable();
             $table->integer('balance')->default(0);
             $table->string('stripe_id');

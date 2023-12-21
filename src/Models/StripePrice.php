@@ -14,14 +14,10 @@ class StripePrice extends Model
 
     protected $casts = [
         'type' => BillingType::class,
-        //        'unit_amount' => 'integer',
-        //        'recurring' => 'array',
         'recurring' => 'json',
         'metadata' => 'json',
-        //        'active' => 'boolean',
     ];
 
-    //
     protected $attributes = [
         'metadata' => [],
         'recurring' => [],

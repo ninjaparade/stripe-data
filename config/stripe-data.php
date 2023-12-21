@@ -10,4 +10,6 @@ return [
         'stripe_account' => env('STRIPE_ACCOUNT', null),
         'client_id' => env('STRIPE_CLIENT_ID', null),
     ],
+
+    'customer_class' => null,
 ];
